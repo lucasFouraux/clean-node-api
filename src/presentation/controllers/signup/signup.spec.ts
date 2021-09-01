@@ -1,10 +1,8 @@
 // VER SOBRE OS TRES TIPOS DE MOCK MENCIONADOS NA AULA 8
 
-import { MissingParamError, InvalidParamError, ServerError } from '../errors'
+import { MissingParamError, InvalidParamError, ServerError } from '../../errors'
 import SignUpController from './signup'
-import { EmailValidator } from '../protocols/email-validator'
-import { AddAccount, AddAccountModel } from '../../domain/usecases/add-account'
-import { AccountModel } from '../../domain/models/account'
+import { EmailValidator, AccountModel, AddAccount, AddAccountModel } from './signup-protocols'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
