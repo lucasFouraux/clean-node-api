@@ -20,5 +20,11 @@ export const MongoHelper = {
 
   getCollection (name: string): Collection {
     return this.client.db().collection(name)
+  },
+
+  map: (collection: any): any => {
+    const collectionMapped = Object.assign({}, collection, { id: collection._id.toHexString() })
+    delete collectionMapped._id
+    return collectionMapped
   }
 }
