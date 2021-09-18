@@ -1,6 +1,11 @@
 version: "3"
 
 services:
+  mongo:
+    image: mongo
+    container_name: mongo-carnica
+    command: --serviceExecutor adaptive
+    restart: always
   aplicacao:
     build: .
     command: npm start
@@ -8,3 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/app
+    restart: always
+    depends_on: 
+      - mongo
+    
