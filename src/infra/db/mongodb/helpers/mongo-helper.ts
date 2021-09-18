@@ -9,7 +9,7 @@ export const MongoHelper = {
       useUnifiedTopology: true
     }
 
-    this.client = await MongoClient.connect(process.env.MONGO_URL as string, options as ConnectOptions)
+    this.client = await MongoClient.connect(url, options as ConnectOptions)
 
     await this.client.db()
   },
