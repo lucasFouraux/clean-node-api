@@ -3,7 +3,7 @@ version: "3"
 services:
   mongo:
     image: mongo
-    container_name: mongo-carnica
+    container_name: mongodb
     command: --serviceExecutor adaptive
     restart: always
   aplicacao:
