@@ -192,7 +192,7 @@ describe('', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError(''))
   })
 
   it('should return 500 if AddAccount throws ', async () => {
@@ -211,7 +211,7 @@ describe('', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body).toEqual(new ServerError(''))
   })
 
   it('should return 200 if valid data is provided', async () => {
