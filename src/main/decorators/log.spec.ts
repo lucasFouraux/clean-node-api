@@ -90,7 +90,7 @@ describe('LogController Decorator', () => {
     fakeError.stack = 'any_stack'
     const error = serverError(fakeError)
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'log')
-    jest.spyOn(controllerStub, 'handle').mockImplementation(async () => await new Promise((resolve, reject) => reject(error)))
+    jest.spyOn(controllerStub, 'handle').mockImplementation(async () => await new Promise((resolve, reject) => resolve(error)))
     const httpRequest = {
       body: {
         email: 'any_mail@mail.com',
