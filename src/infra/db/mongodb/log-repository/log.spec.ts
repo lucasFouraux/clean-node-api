@@ -28,8 +28,4 @@ describe('Log Mongo Repository', () => {
     const count = await errorCollection.countDocuments()
     expect(count).toBe(1)
   })
-
-  it('should ', () => {
-
-  })
 })
