@@ -1,7 +1,7 @@
 // VER SOBRE OS TRES TIPOS DE MOCK MENCIONADOS NA AULA 8
 
 import { MissingParamError, ServerError } from '../../errors'
-import { badRequest, ok, serverError } from '../../helpers/http-helper'
+import { badRequest, ok, serverError } from '../../helpers/http/http-helper'
 import SignUpController from './signup'
 import { AccountModel, AddAccount, AddAccountModel, HttpRequest, Validation } from './signup-protocols'
 
