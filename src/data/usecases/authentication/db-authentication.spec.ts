@@ -107,7 +107,7 @@ describe('DbAuthentication UseCase', () => {
 
   it('should return undefined if LoadAccountByEmailRepository returns undefined', async () => {
     const { sut, loadAccountByEmailRepository } = makeSut()
-    jest.spyOn(loadAccountByEmailRepository, 'loadByEmail').mockReturnValueOnce(new Promise((resolve) => resolve(undefined)))
+    jest.spyOn(loadAccountByEmailRepository, 'loadByEmail').mockReturnValueOnce(new Promise((resolve) => resolve(null)))
     const accessToken = await sut.auth(makeFakeAuthentication())
     expect(accessToken).toBeUndefined()
   })
