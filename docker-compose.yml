@@ -2,18 +2,23 @@ version: "3"
 
 services:
   mongo:
-    image: mongo
     container_name: mongodb
-    command: --serviceExecutor adaptive
+    image: mongo
     restart: always
-  aplicacao:
+    volumes:
+      - ./data:/data/db
+    ports: 
+      - "27017:27017"
+  api:
+    container_name: clean-node-api-container
     build: .
+    image: clean-node-api
+    restart: always
     command: npm start
+    volumes:
+      - ./dist:/usr/src/clean-node-api/dist
     ports:
       - "3000:3000"
-    volumes:
-      - .:/usr/app
-    restart: always
-    depends_on: 
+    links:
       - mongo
     
