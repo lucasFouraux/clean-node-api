@@ -1,8 +1,8 @@
 // VER SOBRE OS TRES TIPOS DE MOCK MENCIONADOS NA AULA 8
 
-import { InvalidParamError } from '../../errors'
-import { EmailValidator } from '../../protocols/email-validator'
+import { InvalidParamError } from '../../presentation/errors'
 import { EmailValidation } from './email-validation'
+import { EmailValidator } from './email-validator'
 
 const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
