@@ -1,6 +1,6 @@
 // VER SOBRE OS TRES TIPOS DE MOCK MENCIONADOS NA AULA 8
 
-import { InvalidParamError } from '../../presentation/errors'
+import { InvalidParamError } from '@/presentation/errors'
 import { EmailValidation } from './email-validation'
 import { EmailValidator } from './email-validator'
 
