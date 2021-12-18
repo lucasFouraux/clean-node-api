@@ -6,6 +6,7 @@ import { SurveyModel } from '@/domain/models/survey'
 import { SurveyMongoRepository } from '../survey/survey-mongo-repository'
 import { AccountModel } from '@/domain/models/account'
 import { AccountMongoRepository } from '../account/account-mongo-repository'
+import { ObjectID } from 'bson'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
@@ -96,7 +97,7 @@ describe('Survey Mongo Repository', () => {
         date: new Date()
       })
       expect(surveyResult).toBeTruthy()
-      expect(surveyResult?.id).toStrictEqual(res.insertedId)
+      expect(new ObjectID(surveyResult?.id)).toEqual(res.insertedId)
       expect(surveyResult?.answer).toBe(survey?.answers[1].answer)
     })
   })
