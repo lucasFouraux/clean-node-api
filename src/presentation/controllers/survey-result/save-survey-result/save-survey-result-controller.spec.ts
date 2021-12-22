@@ -95,7 +95,7 @@ describe('SaveSurveyResult Controller', () => {
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('surveyId')))
   })
 
-  it('should return 500 if Authentication throws', async () => {
+  it('should return 500 if LoadSurveyById throws', async () => {
     const { sut, loadSurveyByIdStub } = makeSut()
     jest.spyOn(loadSurveyByIdStub, 'loadById').mockReturnValue(new Promise((resolve, reject) => reject(new Error())))
     const httpResponse = await sut.handle({})
@@ -125,5 +125,12 @@ describe('SaveSurveyResult Controller', () => {
       date: new Date(),
       answer: 'any_answer'
     })
+  })
+
+  it('should return 500 if SaveSurveyResult throws', async () => {
+    const { sut, saveSurveyResultStub } = makeSut()
+    jest.spyOn(saveSurveyResultStub, 'save').mockReturnValue(new Promise((resolve, reject) => reject(new Error())))
+    const httpResponse = await sut.handle({})
+    expect(httpResponse).toEqual(serverError(new Error()))
   })
 })
