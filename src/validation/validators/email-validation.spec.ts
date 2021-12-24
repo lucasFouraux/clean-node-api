@@ -1,18 +1,9 @@
 // VER SOBRE OS TRES TIPOS DE MOCK MENCIONADOS NA AULA 8
 
 import { InvalidParamError } from '@/presentation/errors'
+import { mockEmailValidator } from '@/validation/test'
 import { EmailValidation } from './email-validation'
 import { EmailValidator } from './email-validator'
-
-const makeEmailValidator = (): EmailValidator => {
-  class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
-      return true
-    }
-  }
-
-  return new EmailValidatorStub()
-}
 
 type SutTypes = {
   sut: EmailValidation
@@ -20,7 +11,7 @@ type SutTypes = {
 }
 
 const makeSut = (): SutTypes => {
-  const emailValidatorStub = makeEmailValidator()
+  const emailValidatorStub = mockEmailValidator()
   const sut = new EmailValidation('email', emailValidatorStub)
   return {
     sut,
