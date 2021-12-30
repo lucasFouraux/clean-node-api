@@ -12,7 +12,7 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const loadAccountByEmailRepositoryStub = mockLoadAccountByEmailRepository()
-  jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValue(new Promise(resolve => null))
+  jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockImplementation(async () => await Promise.resolve(null))
   const hasherStub = mockHasher()
   const addAccountRepositoryStub = makeAddAccountRepository()
   const sut = new DbaddAccount(hasherStub, addAccountRepositoryStub, loadAccountByEmailRepositoryStub)
@@ -34,7 +34,7 @@ describe('DbAddAccount Usecase', () => {
 
   it('should throw if Hasher throws', async () => {
     const { sut, hasherStub } = makeSut()
-    jest.spyOn(hasherStub, 'hash').mockImplementationOnce(async () => await new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(hasherStub, 'hash').mockImplementationOnce(async () => await Promise.reject(new Error()))
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow()
   })
@@ -52,7 +52,7 @@ describe('DbAddAccount Usecase', () => {
 
   it('should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepositoryStub } = makeSut()
-    jest.spyOn(addAccountRepositoryStub, 'add').mockImplementationOnce(async () => await new Promise((resolve, reject) => reject(new Error())))
+    jest.spyOn(addAccountRepositoryStub, 'add').mockImplementationOnce(async () => await Promise.reject(new Error()))
     const promise = sut.add(mockAddAccountParams())
     await expect(promise).rejects.toThrow()
   })
@@ -65,7 +65,7 @@ describe('DbAddAccount Usecase', () => {
 
   it('should return null if LoadAcccountByEmailRepository not return null', async () => {
     const { sut, loadAccountByEmailRepositoryStub } = makeSut()
-    jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(new Promise(resolve => resolve(mockAccountModel())))
+    jest.spyOn(loadAccountByEmailRepositoryStub, 'loadByEmail').mockReturnValueOnce(Promise.resolve(mockAccountModel()))
     const account = await sut.add(mockAddAccountParams())
     expect(account).toBeNull()
   })
