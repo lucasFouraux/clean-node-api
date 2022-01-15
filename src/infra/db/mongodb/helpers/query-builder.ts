@@ -17,6 +17,14 @@ export class QueryBuilder {
     return this
   }
 
+  sort (data: object): QueryBuilder {
+    this.query.push({
+      $sort: data
+    })
+
+    return this
+  }
+
   unwind (data: object): QueryBuilder {
     this.query.push({
       $unwind: data
@@ -49,7 +57,7 @@ export class QueryBuilder {
     return this
   }
 
-  buid (): object[] {
+  build (): object[] {
     return this.query
   }
 }
