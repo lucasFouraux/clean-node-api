@@ -71,19 +71,18 @@ describe('Survey Mongo Repository', () => {
       const survey = await makeSurvey()
       const account = await makeAccount()
       const sut = makeSut()
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey?.id as string,
         accountId: account?.id as string,
         answer: survey?.answers[0].answer as string,
         date: new Date()
       })
+      const surveyResult = await surveyResultCollection.find({
+        surveyId: new ObjectId(survey?.id as string),
+        accountId: new ObjectId(account?.id as string)
+      }).toArray()
       expect(surveyResult).toBeTruthy()
-      expect(surveyResult?.surveyId.toString()).toBe(survey?.id)
-      expect(surveyResult?.answers[0].answer).toBe(survey?.answers[0].answer)
-      expect(surveyResult?.answers[0].count).toBe(1)
-      expect(surveyResult?.answers[0].percent).toBe(100)
-      expect(surveyResult?.answers[1].count).toBe(0)
-      expect(surveyResult?.answers[1].percent).toBe(0)
+      expect(surveyResult.length).toBe(1)
     })
 
     it('should update survey result if its not new', async () => {
@@ -96,19 +95,17 @@ describe('Survey Mongo Repository', () => {
         date: new Date()
       })
       const sut = makeSut()
-      const surveyResult = await sut.save({
+      await sut.save({
         surveyId: survey?.id as string,
         accountId: account?.id as string,
         answer: survey?.answers[1].answer as string,
         date: new Date()
       })
+      const surveyResult = await surveyResultCollection.find({
+        surveyId: survey?.id as string,
+        accountId: account?.id as string
+      }).toArray()
       expect(surveyResult).toBeTruthy()
-      expect(surveyResult?.surveyId.toString()).toBe(survey?.id)
-      expect(surveyResult?.answers[0].answer).toBe(survey?.answers[1].answer)
-      expect(surveyResult?.answers[0].count).toBe(1)
-      expect(surveyResult?.answers[0].percent).toBe(100)
-      expect(surveyResult?.answers[1].count).toBe(0)
-      expect(surveyResult?.answers[1].percent).toBe(0)
     })
   })
 
