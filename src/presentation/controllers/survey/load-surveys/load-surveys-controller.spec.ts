@@ -4,7 +4,7 @@ import MockDate from 'mockdate'
 import { noContent, ok, serverError } from '@/presentation/helpers/http/http-helper'
 import { mockLoadSurveys } from '@/presentation/test'
 
-const makeFakeSurveys = (): SurveyModel[] => {
+const mockSurveys = (): SurveyModel[] => {
   return [{
     id: 'any_id',
     question: 'any_question',
@@ -57,7 +57,7 @@ describe('LoadSurveys Controller', () => {
   it('should return 200 on success', async () => {
     const { sut } = makeSut()
     const HttpResponse = await sut.handle({})
-    expect(HttpResponse).toEqual(ok(makeFakeSurveys()))
+    expect(HttpResponse).toEqual(ok(mockSurveys()))
   })
 
   it('should return 204 if LoadSurveys returns empty', async () => {
