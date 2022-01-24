@@ -82,25 +82,22 @@ describe('Survey Routes', () => {
         .expect(403)
     })
 
-    // it('should return 200 on save survey result with accessToken', async () => {
-    //   const accessToken = await makeAccessToken()
-    //   const res = await surveyCollection.insertOne({
-    //     question: 'Question',
-    //     answers: [{
-    //       answer: 'Answer 1',
-    //       image: 'http://imagem-name.com'
-    //     }, {
-    //       answer: 'Answer 2'
-    //     }],
-    //     date: new Date()
-    //   })
-    //   await request(app)
-    //     .put(`/api/surveys/${res.insertedId.toHexString()}/results`)
-    //     .set('x-access-token', accessToken)
-    //     .send({
-    //       answer: 'Answer 1'
-    //     })
-    //     .expect(200)
-    // })
+    it('should return 200 on load survey result with accessToken', async () => {
+      const accessToken = await makeAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [{
+          answer: 'Answer 1',
+          image: 'http://imagem-name.com'
+        }, {
+          answer: 'Answer 2'
+        }],
+        date: new Date()
+      })
+      await request(app)
+        .get(`/api/surveys/${res.insertedId.toHexString()}/results`)
+        .set('x-access-token', accessToken)
+        .expect(200)
+    })
   })
 })
