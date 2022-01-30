@@ -7,9 +7,9 @@ import { LoadAccountByEmailRepository, UpdateAccessTokenRepository } from '@/dat
 import { ObjectID } from 'bson'
 
 export class AccountMongoRepository implements AddAccountRepository, LoadAccountByEmailRepository, UpdateAccessTokenRepository, LoadAccountByTokenRepository {
-  async add (accountData: AddAccountParams): Promise<AccountModel> {
+  async add (data: AddAccountParams): Promise<AccountModel> {
     const accountCollection = await MongoHelper.getCollection('accounts')
-    const result = await accountCollection.insertOne(accountData)
+    const result = await accountCollection.insertOne(data)
     return MongoHelper.map(await accountCollection.findOne({ _id: result.insertedId }))
   }
 
@@ -19,7 +19,7 @@ export class AccountMongoRepository implements AddAccountRepository, LoadAccount
     return account && MongoHelper.map(account)
   }
 
-  async loadByToken (token: string, role?: string | undefined): Promise<AccountModel | null> {
+  async loadByToken (token: string, role?: string | null): Promise<AccountModel | null> {
     const accountCollection = await MongoHelper.getCollection('accounts')
     const account = await accountCollection.findOne({
       accessToken: token,
