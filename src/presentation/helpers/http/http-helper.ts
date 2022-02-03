@@ -30,10 +30,3 @@ export const noContent = (): HttpResponse => ({
   statusCode: 204,
   body: null
 })
-
-// export const badRequest = (error: Error): HttpResponse => {
-//   return {
-//     statusCode: 400,
-//     body: error
-//   }
-// }
