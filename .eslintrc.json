@@ -11,6 +11,8 @@
       {
         "checksVoidReturn": false
       }
-    ]
+    ],
+    "@typescript-eslint/no-namespace": "off",
+    "import/export": "off"
   }
 }

@@ -3,7 +3,7 @@ import { SurveyResultModel } from '@/domain/models/survey-result'
 export type SaveSurveyResultParams = {
   surveyId: string
   accountId: string
-  answer: string
+  answer: string | null
   date: Date
 }
 
