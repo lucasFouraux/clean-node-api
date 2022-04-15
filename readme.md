@@ -1,18 +1,9 @@
 # **Clean Node API**
 
-Essa API faz parte do treinamento do professor Rodrigo Manguinho (Mango) na Udemy.
+This API is part of the training of Professor Rodrigo Manguinho (Mango) at Udemy.
 
-O objetivo do treinamento é mostrar como criar uma API com uma arquitetura bem definida e desacoplada, utilizando TDD (programação orientada a testes) como metodologia de trabalho, Clean Architecture para fazer a distribuição de responsabilidades em camadas, sempre seguindo os princípios do SOLID e, sempre que possível, aplicando Design Patterns para resolver alguns problemas comuns.
+The objective of the training is to show how to create an API with a well-defined and decoupled architecture, using TDD (test-oriented programming) as a working methodology, Clean Architecture to distribute responsibilities in layers, always following the principles of SOLID and, whenever possible, applying Design Patterns to solve some common problems.
 <br /><br />
-
-<!-- > ## APIs construídas no treinamento
-
-1. [Cadastro](./requirements/signup.md)
-2. [Login](./requirements/login.md)
-3. [Criar enquete](./requirements/add-survey.md)
-4. [Listar enquetes](./requirements/load-surveys.md)
-5. [Responder enquete](./requirements/save-survey-result.md)
-6. [Resultado da enquete](./requirements/load-survey-result.md) -->
 
 > ## Princípios
 
