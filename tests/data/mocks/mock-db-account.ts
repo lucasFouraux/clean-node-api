@@ -1,39 +1,48 @@
 import { AddAccountRepository } from '@/data/protocols/db/account/add-account-repository'
 import { LoadAccountByEmailRepository } from '@/data/protocols/db/account/load-account-by-email-repository'
 import { LoadAccountByTokenRepository } from '@/data/protocols/db/account/load-account-by-token-repository'
-import { AccountModel } from '@/domain/models'
-import { mockAccountModel } from '../../domain/mocks'
 import { UpdateAccessTokenRepository } from '../protocols/db/account/update-access-token-repository'
-
+import faker from 'faker'
 export class AddAccountRepositorySpy implements AddAccountRepository {
-  accountModel = mockAccountModel()
+  result = true
   addAccountParams: AddAccountRepository.Params
 
   async add (data: AddAccountRepository.Params): Promise<AddAccountRepository.Result> {
     this.addAccountParams = data
-    return await Promise.resolve(this.accountModel)
+    return await Promise.resolve(this.result)
   }
 }
 
 export class LoadAccountByEmailRepositorySpy implements LoadAccountByEmailRepository {
-  accountModel: AccountModel | null = mockAccountModel()
+  result: any | null = {
+    id: faker.random.uuid(),
+    name: faker.name.findName(),
+    password: faker.internet.password()
+  }
+
   email: string | null
 
-  async loadByEmail (email: string): Promise<AccountModel | null> {
+  async loadByEmail (email: string): Promise<LoadAccountByEmailRepository.Result | null> {
     this.email = email
-    return await Promise.resolve(this.accountModel)
+    return await Promise.resolve(this.result)
   }
 }
 
 export class LoadAccountByTokenRepositorySpy implements LoadAccountByTokenRepository {
-  accountModel: AccountModel | null = mockAccountModel()
+  result: any | null = {
+    id: faker.random.uuid(),
+    name: faker.name.findName(),
+    email: faker.internet.email(),
+    password: faker.internet.password()
+  }
+
   token: string
   role?: string
 
   async loadByToken (token: string, role?: string): Promise<LoadAccountByTokenRepository.Result | null> {
     this.token = token
     this.role = role
-    return await Promise.resolve(this.accountModel)
+    return await Promise.resolve(this.result)
   }
 }
 

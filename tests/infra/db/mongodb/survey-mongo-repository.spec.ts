@@ -2,20 +2,16 @@
 import { SurveyMongoRepository } from '@/infra/db/mongodb/survey-mongo-repository'
 import { MongoHelper } from '@/infra/db/mongodb/mongo-helper'
 import { Collection } from 'mongodb'
-import { AccountModel } from '@/domain/models/account'
-import { AccountMongoRepository } from '@/infra/db/mongodb/account-mongo-repository'
 import { mockAddAccountParams, mockAddSurveyParams } from '@/../tests/domain/mocks'
 
 let surveyCollection: Collection
 let surveyResultCollection: Collection
 let accountCollection: Collection
 
-const mockAccount = async (): Promise<AccountModel | null> => {
+const mockAccountId = async (): Promise<string | null> => {
   const accounData = mockAddAccountParams()
-  await accountCollection.insertOne(accounData)
-  const accountMongoRepository = new AccountMongoRepository()
-  const account = await accountMongoRepository.loadByEmail(accounData.email)
-  return account
+  const res = await accountCollection.insertOne(accounData)
+  return res.insertedId.toHexString()
 }
 
 const makeSut = (): SurveyMongoRepository => {
@@ -74,9 +70,9 @@ describe('SurveyMongoRepository', () => {
     // })
 
     it('should load empty list', async () => {
-      const account = await mockAccount()
+      const accountId = await mockAccountId()
       const sut = makeSut()
-      const surveys = await sut.loadAll(account?.id as string)
+      const surveys = await sut.loadAll(accountId as string)
       expect(surveys.length).toBe(0)
     })
   })

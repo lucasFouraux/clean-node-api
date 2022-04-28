@@ -1,6 +1,7 @@
 import { DbAuthentication } from '@/data/usecases'
 import { mockAuthenticationParams } from '../../domain/mocks'
 import { EncrypterSpy, HashComparerSpy, LoadAccountByEmailRepositorySpy, UpdateAccessTokenRepositorySpy } from '../mocks'
+import faker from 'faker'
 
 type SutTypes = {
   sut: DbAuthentication
@@ -48,7 +49,7 @@ describe('DbAuthentication UseCase', () => {
 
   it('should return null if LoadAccountByEmailRepository returns null', async () => {
     const { sut, loadAccountByEmailRepositorySpy } = makeSut()
-    loadAccountByEmailRepositorySpy.accountModel = null
+    loadAccountByEmailRepositorySpy.result = null
     const accessToken = await sut.auth(mockAuthenticationParams())
     expect(accessToken).toBeNull()
   })
@@ -58,7 +59,7 @@ describe('DbAuthentication UseCase', () => {
     const authenticationParams = mockAuthenticationParams()
     await sut.auth(authenticationParams)
     expect(hashComparerSpy.plaintext).toBe(authenticationParams.password)
-    expect(hashComparerSpy.digest).toBe(loadAccountByEmailRepositorySpy.accountModel?.password)
+    expect(hashComparerSpy.digest).toBe(loadAccountByEmailRepositorySpy.result?.password)
   })
 
   it('should throw if HashComparer throws', async () => {
@@ -78,7 +79,7 @@ describe('DbAuthentication UseCase', () => {
   it('should call Encrypter with correct plaintext', async () => {
     const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
     await sut.auth(mockAuthenticationParams())
-    expect(encrypterSpy.plaintext).toBe(loadAccountByEmailRepositorySpy.accountModel?.id)
+    expect(encrypterSpy.plaintext).toBe(loadAccountByEmailRepositorySpy.result?.id)
   })
 
   it('should throw if Encrypter throws', async () => {
@@ -92,13 +93,13 @@ describe('DbAuthentication UseCase', () => {
     const { sut, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
     const authenticationModel = await sut.auth(mockAuthenticationParams())
     expect(authenticationModel?.accessToken).toBe(encrypterSpy.ciphertext)
-    expect(authenticationModel?.name).toBe(loadAccountByEmailRepositorySpy.accountModel?.name)
+    expect(authenticationModel?.name).toBe(loadAccountByEmailRepositorySpy.result?.name)
   })
 
   it('should call UpdateAccessTokenRepository with correct values', async () => {
     const { sut, updateAccessTokenRepositorySpy, encrypterSpy, loadAccountByEmailRepositorySpy } = makeSut()
     await sut.auth(mockAuthenticationParams())
-    expect(updateAccessTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.accountModel?.id)
+    expect(updateAccessTokenRepositorySpy.id).toBe(loadAccountByEmailRepositorySpy.result?.id)
     expect(updateAccessTokenRepositorySpy.token).toBe(encrypterSpy.ciphertext)
   })
 
